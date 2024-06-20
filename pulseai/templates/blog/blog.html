@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+    {% for blog in blogs  %}
+        <h3>{{blog.title}}</h3>
+        <p>{{blog.created_at}}</p>
+        <img src="{{blog.primary_photo.url}}" alt="">
+        <p>{{blog.content}}</p>
+    {% endfor %}
+
+{% endblock  %}

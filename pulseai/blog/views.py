@@ -1,4 +1,5 @@
 from django.shortcuts import render,HttpResponse
+from blog.models import Blog
 
 # Create your views here.
 def index(request):
@@ -9,6 +10,7 @@ def about(request):
     return render(request,'blog/about.html')
 
 def contact(request):
+
     mobile = 7681049268
     email = "manoharss0407@gmail.com"
     a = 10
@@ -36,3 +38,12 @@ def contact(request):
         'students':students,
     }
     return render(request,'blog/contact.html',context)
+
+
+def all_blogs(request):
+    blogs = Blog.objects.all()
+    context = {
+        'blogs' : blogs
+    }
+
+    return render(request,'blog/blog.html',context)
