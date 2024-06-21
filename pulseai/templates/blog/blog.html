@@ -1,12 +1,59 @@
 {% extends "layout.html" %}
+{% load static %}
 
 
 {% block content %}
-    {% for blog in blogs  %}
-        <h3>{{blog.title}}</h3>
-        <p>{{blog.created_at}}</p>
-        <img src="{{blog.primary_photo.url}}" alt="">
-        <p>{{blog.content}}</p>
-    {% endfor %}
+{% comment %} <div class="container"> {% endcomment %}
+    <div class="row g-2">
+        <div class="col-md-2">
+            {% comment "" %}sidebar{% endcomment %}
+            <div class="sidebar-wrapper d-flex justify-content-between">
+                <div class="sidebar-menu p-3 d-none d-md-block" id="sidebar-menu">
+                   <ul class="list-unstyled">
+                    <li class="py-2 ">
+                        <a class="text-decoration-none" href="{% url "blogs" %}">All</a>
+                    </li>
+                    {% for c in categories  %}
+                    <li class="py-2 ">
+                        <a class="text-decoration-none" href="{% url "blog_cat" c.id %}">{{c}}</a>
+                    </li>
+                    {% endfor %}
+                   </ul>
+                </div>
+                <div class="class">
+                    <button class="btn btn-sm btn-light fw-bold d-block d-md-none" id="sidebar-toggler">=</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            {% if blogs|length is 0 %}
+                <h1>No Blogs Avaliable</h1>
+
+            {% endif %}
+            {% for blog in blogs  %}
+            <div class="card my-2">
+                <div class="card-body">
+                    <div class="row g-2">
+                        <div class="col-md-4">
+                            <img src="{{blog.primary_photo.url}}" alt="image" class="img-fluid h-100">
+                        </div>
+                        <div class="col-md-8">
+                            <h3>{{blog.title}}</h3>
+                            <p>{{blog.created_at}}</p>
+                            <p>{{blog.content|safe|truncatechars_html:"100"}}</p>
+                            <a href="{% url "blog" blog.id %}" class="btn btn-sm btn-outline-dark rounded-0">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% comment %} </div> {% endcomment %}
+
+{% endblock  %}
+
+{% block javascript %}
+    <script src="{% static "js/sidebar.js" %}"></script>
 
 {% endblock  %}

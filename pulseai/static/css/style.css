@@ -5,3 +5,8 @@
         color: yellow;
     }
 }
+
+.blog-details img{
+    display: block;
+    margin: auto;
+}
