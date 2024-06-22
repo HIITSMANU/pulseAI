@@ -10,3 +10,11 @@
     display: block;
     margin: auto;
 }
+
+.success{
+    color: green;
+}
+
+.error{
+    color: red;
+}
