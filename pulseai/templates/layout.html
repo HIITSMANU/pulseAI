@@ -39,7 +39,7 @@
                     Welcome {{user.username}}
                   </a>
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Take a test</a></li>
+                    <li><a class="dropdown-item" href="{% url "test" %}">Take a test</a></li>
                     <li><a class="dropdown-item" href="#">Profile</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="{% url "signout" %}">Logout</a></li>
@@ -68,6 +68,9 @@
         &copy; 2024 | PulseAI
     </footer>
     <script src="{% static "js/bootstrap.bundle.min.js" %}"></script>
-    {% block javascript %}{% endblock %}
+    {% comment %} <script src="{% static "js/bootstrap  .bundle.min.js.map" %}"></script> {% endcomment %}
+    {% block javascript %}
+
+    {% endblock %}
 </body>
 </html>

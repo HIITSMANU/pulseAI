@@ -1,24 +1,35 @@
 {% extends "layout.html" %}
+{% load static %}
 
 {% block content %}
 
 <div class="row my-3">
     <h2 class="text-center mb-2">Sign Up</h2>
     <div class="col-md-6 mx-auto">
-        <form action="{% url "signup" %}" method="POST">
+        <form action="{% url "signup" %}" method="POST" onsubmit="validate(event)">
             {% csrf_token %}
             {% for m in messages  %}
             <p class="{{m.tags}}">{{m}}</p>
             {% endfor %}
-            <input type="text" class="form-control rounded-0 mb-2" name="f_name" placeholder="First Name" required>
-            <input type="text" class="form-control rounded-0 mb-2" name="l_name" placeholder="Last Name" required>
-            <input type="text" class="form-control rounded-0 mb-2" name="u_name" placeholder="Username" required>
-            <input type="email" class="form-control rounded-0 mb-2" name="email" placeholder="Email" required>
-            <input type="password" class="form-control rounded-0 mb-2" name="pass" placeholder="Password" required>
-            <input type="password" class="form-control rounded-0 mb-2" name="pass2" placeholder="Confirm Password" required>
+            <input type="text" class="form-control rounded-0" name="f_name" id="f_name" placeholder="First Name" >
+            <label class="error" for="" id="fname_error"></label>
+            <input type="text" class="form-control rounded-0" name="l_name" id="l_name" placeholder="Last Name" >
+            <label class="error" for="" id="lname_error"></label>
+            <input type="text" class="form-control rounded-0" name="u_name" id="u_name" placeholder="Username" >
+            <label class="error" for="" id="uname_error"></label>
+            <input type="email" class="form-control rounded-0" name="email" id="email" placeholder="Email" >
+            <label class="error" for="" id="email_error"></label>
+            <input type="password" class="form-control rounded-0" name="pass" id="pass" placeholder="Password" >
+            <label class="error" for="" id="pass_error"></label>
+            <input type="password" class="form-control rounded-0" name="pass2" id="pass2" placeholder="Confirm Password" >
+            <label class="error" for="" id="pass2_error"></label>
             <input type="submit" class="btn btn-dark w-100 rounded-0 mt-2" value="register">
            
         </form>
     </div>
 </div>
 {% endblock  %}
+
+{% block javascript %}
+    <script src="{% static 'js/formvalidator.js' %}"></script>
+{% endblock %}

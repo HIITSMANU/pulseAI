@@ -3,3 +3,11 @@ webencodings===0.5.1
 six===1.16.0
 bleach===6.1.0
 django_summernote===0.8.20.0
+pytz===2024.1
+threadpoolctl===3.5.0
+python_dateutil===2.9.0.post0
+numpy===1.25.2
+joblib===1.4.2
+scipy===1.13.1
+pandas===2.0.3
+scikit_learn===1.2.2

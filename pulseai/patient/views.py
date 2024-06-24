@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 
+from patient.form import HeartVitalForm
+
 # Create your views here.
 def formdata(request):
     return render(request, 'patient/signup.html')
@@ -49,3 +51,11 @@ def signin(request):
 def signout(request):
     logout(request)
     return redirect('home')
+
+
+def take_a_test(request):
+    form = HeartVitalForm()
+    context = {
+        "form" : form,
+    }
+    return render(request,'patient/take_a_test.html',context)

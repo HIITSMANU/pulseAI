@@ -61,4 +61,4 @@ def blog_details(request,bid):
         'blog':blog
     }
 
-    return render(request,'blog/details.html',context)
+    return render(request,'blog/details.html',context)  
