@@ -1,0 +1,94 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="container my-5">
+        {% if messages %}
+            <div class="row">
+                <div class="col-md-6 mx-auto">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {% for m in messages  %}
+                            <p class="{{m.tags}} m-0">{{m}}</p>
+                        {% endfor %}                        
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <div class="row g-3">
+            <div class="col-md-4">
+               <div class="mb-4 text-center">
+                    <h3>Book an Appointment</h3>
+                    <p>1 Appointment/person/day</p>
+               </div>
+               <form action="{% url "appoint" %}" method="post">
+                {% csrf_token %}
+                <div class="mb-2">
+                    <label for="">Mobile</label>
+                    <input type="text" name="mobile" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label for="">Date</label>
+                    <input type="date" name="date" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label for="">Purpose of Appointment</label>
+                    <textarea name="note" id="" rows="5" class="form-control" required></textarea>
+                </div>
+                <div class="mt-2">
+                    <input type="submit" value="Submit" class="btn btn-dark w-100">
+                </div>
+               </form>
+            </div>
+            <div class="col-md-8">
+                <div class="mb-4 text-center">
+                    <h3>Current & Previous Bookings</h3>
+                    <p>Check Your Booking</p>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Mobile</th>
+                                <th>Note</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for app  in appointments  %}
+                                <tr>
+                                    <td>{{app.date}}</td>
+                                    <td>{{app.mobile}}</td>
+                                    <td>{{app.note}}</td>
+                                    <td>{{app.status}}</td>
+                                    <td>
+                                        <a href="{% url "updateapp" app.id %}">
+                                            <i class="fa-regular fa-pen-to-square"></i>
+                                        </a>
+                                        <a href="{% url "del_appoint" app.id %}" id="delete_appointment" onclick="confirmDelete(event)">
+                                            <i style="color:red" class="fa-solid fa-trash-can"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        function confirmDelete(event){
+            let res = confirm("Are you Sure !! You want to delete?")
+
+            if(!res){
+                event.preventDefault()
+            }
+        }
+    </script>
+{% endblock %}

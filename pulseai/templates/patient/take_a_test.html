@@ -6,13 +6,29 @@
         <div class="row">
             <div class="col-md-6 mx-auto">
                 <h3 class="text-center mb-4">Take an AI Driven Test</h3>
+                {% if error %}
+                    <p class="text-center text-danger">Your Quota is over</p>
+                {% else %}
                 <div>
+                    <!--Method post is important-->
                     <form action="{% url "test" %}" method="post">
+                    {% csrf_token %}
                     {{form.as_p}}
                     <input type="submit" class="btn btn-dark rounded-0 w-100 mt-3" >
                     </form>
                 </div>
             </div>
+            {% if prediction %}
+                <div class="col-md-6 py-5 {% if prediction.class == "Yes" %} text-danger {% else %} text-success {% endif %}">
+                    <h1>Heart Disease: {{prediction.class}}</h1>
+                    <h1>Probability of Having Heart Disease : {{prediction.probability}}</h1>
+                    <p class="text-muted">This is an AI generated response and can be wrong. Please consult a Doctor for accurate diagnosis</p>
+                    <div class="text-right my-3">
+                        <a href="{% url "appoint" %}" class="btn btn-primary">Book an Appointment</a>
+                    </div>
+                </div>
+            {% endif %}
+            {% endif %}
         </div>
     </div>
 
