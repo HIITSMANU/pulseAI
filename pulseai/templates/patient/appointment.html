@@ -6,9 +6,9 @@
             <div class="row">
                 <div class="col-md-6 mx-auto">
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        {% for m in messages  %}
+                        {% for m in messages %}
                             <p class="{{m.tags}} m-0">{{m}}</p>
-                        {% endfor %}                        
+                        {% endfor %}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 </div>
@@ -16,28 +16,29 @@
         {% endif %}
         <div class="row g-3">
             <div class="col-md-4">
-               <div class="mb-4 text-center">
+                <div class="mb-4 text-center">
                     <h3>Book an Appointment</h3>
                     <p>1 Appointment/person/day</p>
-               </div>
-               <form action="{% url "appoint" %}" method="post">
-                {% csrf_token %}
-                <div class="mb-2">
-                    <label for="">Mobile</label>
-                    <input type="text" name="mobile" class="form-control" required>
                 </div>
-                <div class="mb-2">
-                    <label for="">Date</label>
-                    <input type="date" name="date" class="form-control" required>
-                </div>
-                <div class="mb-2">
-                    <label for="">Purpose of Appointment</label>
-                    <textarea name="note" id="" rows="5" class="form-control" required></textarea>
-                </div>
-                <div class="mt-2">
-                    <input type="submit" value="Submit" class="btn btn-dark w-100">
-                </div>
-               </form>
+                <form action="{% url "appoint" %}" method="post" onsubmit="return validateForm()">
+                    {% csrf_token %}
+                    <div class="mb-2">
+                        <label for="mobile">Mobile</label>
+                        <input type="text" name="mobile" class="form-control" id="mobile" >
+                        <label class="error" for="" id="mobileError"></label>
+                    </div>
+                    <div class="mb-2">
+                        <label for="date">Date</label>
+                        <input type="date" name="date" class="form-control" id="date">
+                    </div>
+                    <div class="mb-2">
+                        <label for="note">Purpose of Appointment</label>
+                        <textarea name="note" id="note" rows="5" class="form-control"></textarea>
+                    </div>
+                    <div class="mt-2">
+                        <input type="submit" value="Submit" class="btn btn-dark w-100">
+                    </div>
+                </form>
             </div>
             <div class="col-md-8">
                 <div class="mb-4 text-center">
@@ -56,7 +57,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for app  in appointments  %}
+                            {% for app in appointments %}
                                 <tr>
                                     <td>{{app.date}}</td>
                                     <td>{{app.mobile}}</td>
@@ -83,11 +84,48 @@
 
 {% block javascript %}
     <script>
-        function confirmDelete(event){
-            let res = confirm("Are you Sure !! You want to delete?")
+        function validateForm() {
+            const mobile = document.getElementById('mobile').value;
+            const mobileError = document.getElementById('mobileError');
+            const date = document.getElementById('date').value;
+            const today = new Date();
+            const selectedDate = new Date(date);
+            const maxDate = new Date(today);
+            maxDate.setDate(today.getDate() + 7);
 
-            if(!res){
-                event.preventDefault()
+            mobileError.innerText = '';
+
+            if (!/^\d{10}$/.test(mobile)) {
+                mobileError.innerText = 'Mobile number must be exactly 10 digits.';
+                return false;
+            }
+
+            if (selectedDate < today || selectedDate > maxDate) {
+                alert('Date must be within the next 7 days.');
+                return false;
+            }
+
+            return true;
+        }
+
+        {% comment %} <!--To make changes in input date tags(setting min and max)--> {% endcomment %}
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const dateInput = document.getElementById('date');
+            const today = new Date();
+            const maxDate = new Date(today);
+            maxDate.setDate(today.getDate() + 7);
+            
+            const formatDateString = date => date.toISOString().split('T')[0];
+            
+            dateInput.setAttribute('min', formatDateString(today));
+            dateInput.setAttribute('max', formatDateString(maxDate));
+        });
+
+        function confirmDelete(event) {
+            const res = confirm("Are you sure you want to delete?");
+            if (!res) {
+                event.preventDefault();
             }
         }
     </script>

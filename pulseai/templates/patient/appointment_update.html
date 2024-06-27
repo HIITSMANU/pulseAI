@@ -20,19 +20,20 @@
                     <h3>Update Your Appointment</h3>
                     <p>1 Appointment/person/day</p>
                </div>
-               <form action="{% url "updateapp" appointment.id %}" method="post">
+               <form action="{% url "updateapp" appointment.id %}" method="post" onsubmit="return validateForm()">
                 {% csrf_token %}
                 <div class="mb-2">
                     <label for="">Mobile</label>
-                    <input type="text" name="mobile" class="form-control" value="{{appointment.mobile}}" required>
+                    <input type="text" name="mobile" class="form-control" id="mobile" value="{{appointment.mobile}}" >
+                    <label class="error" for="" id="mobileError"></label>
                 </div>
                 <div class="mb-2">
                     <label for="">Date</label>
-                    <input type="date" name="date" class="form-control" value="{{appointment.date|date:"Y-m-d"}}" required>
+                    <input type="date" name="date" class="form-control" id="date" value="{{appointment.date|date:"Y-m-d"}}" >
                 </div>
                 <div class="mb-2">
                     <label for="">Purpose of Appointment</label>
-                    <textarea name="note" id="" rows="5" class="form-control"  required>{{appointment.note}}</textarea>
+                    <textarea name="note" id="" rows="5" class="form-control"  >{{appointment.note}}</textarea>
                 </div>
                 <div class="mt-2">
                     <input type="submit" value="Submit" class="btn btn-dark w-100">
@@ -41,5 +42,48 @@
             </div>
         </div>
     </div>
+
+{% endblock %}
+
+{% block javascript %}
+<script>
+function validateForm() {
+    const mobile = document.getElementById('mobile').value;
+    const mobileError = document.getElementById('mobileError');
+    const date = document.getElementById('date').value;
+    const today = new Date();
+    const selectedDate = new Date(date);
+    const maxDate = new Date(today);
+    maxDate.setDate(today.getDate() + 7);
+
+    mobileError.innerText = '';
+
+    if (!/^\d{10}$/.test(mobile)) {
+        mobileError.innerText = 'Mobile number must be exactly 10 digits.';
+        return false;
+    }
+
+    if (selectedDate < today || selectedDate > maxDate) {
+        alert('Date must be within the next 7 days.');
+        return false;
+    }
+
+    return true;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const dateInput = document.getElementById('date');
+    const today = new Date();
+    const maxDate = new Date(today);
+    maxDate.setDate(today.getDate() + 7);
+    
+    const formatDateString = date => date.toISOString().split('T')[0];
+    
+    dateInput.setAttribute('min', formatDateString(today));
+    dateInput.setAttribute('max', formatDateString(maxDate));
+});
+
+
+</script>
 
 {% endblock %}

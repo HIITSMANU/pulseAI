@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -9,7 +9,7 @@ from datetime import datetime
 
 from patient.form import HeartVitalForm
 from patient.predict import predict_heart_disease
-from patient.models import HeartVital,Appointment
+from patient.models import HeartVital,Appointment,Visit,Patient
 
 # Create your views here.
 def formdata(request):
@@ -140,3 +140,18 @@ def update_appointment(request,aid):
         'appointment':app
     }
     return render(request,'patient/appointment_update.html',context)
+
+
+def profile_view(request):
+    HeartVitals = HeartVital.objects.filter(user=request.user)
+    # patient = Patient.objects.get(patient=request.user)
+    visits={}
+    if Patient.objects.filter(patient=request.user).exists():
+        patient = Patient.objects.get(patient=request.user)
+        visits = Visit.objects.filter(patient=patient)
+    context = {
+        'HeartVitals':HeartVitals,
+        'visits':visits,
+    }
+
+    return render(request,'patient/profile.html',context)
