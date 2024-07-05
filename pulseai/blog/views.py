@@ -1,5 +1,5 @@
-from django.shortcuts import render,HttpResponse,get_object_or_404
-from blog.models import Blog,BlogCategory
+from django.shortcuts import render,HttpResponse,get_object_or_404,redirect
+from blog.models import Blog,BlogCategory,Comment
 
 # Create your views here.
 def index(request):
@@ -57,8 +57,23 @@ def all_blogs(request,cid=0):
 def blog_details(request,bid):
     # blog = Blog.objects.get(id=bid) gives individual items
     blog = get_object_or_404(Blog , pk=bid)
+    comment = Comment.objects.filter(blog=blog).order_by("-created_at")
     context = {
-        'blog':blog
+        'blog':blog,
+        'comment':comment
     }
 
     return render(request,'blog/details.html',context)  
+
+
+def comment(request):
+    if request.method == 'POST':
+        user = request.user
+        blog_id = request.POST.get('bid')
+        comment = request.POST.get('comment')
+
+        blog = Blog.objects.get(id=blog_id)
+
+        comment = Comment(user=user,blog=blog, comment=comment)
+        comment.save()
+        return redirect('/blog/'+blog_id)
