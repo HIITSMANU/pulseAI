@@ -72,6 +72,40 @@ Doctor uses inline stack for managing patient visit records.
 ![Screenshot 2024-07-08 142223](https://github.com/HIITSMANU/pulseAI/assets/132491372/068c57e2-5f8e-4420-a79b-76268868bc24)
 
 
+## Running Tests
+
+To run tests, run the following command
+
+Build Command 
+```bash
+  python manage.py -r requirements.txt
+```
+
+Run Command
+```bash
+  python manage.py runserver
+```
+
+To see the dependencies
+```bash
+  pip freeze
+```
+
+To make migrations
+```bash
+  python manage.py makemigrations
+  python manage.py migrate
+```
+
+To make admin registration
+```bash
+  python manage.py createsuperuser
+  enter email:
+  enter password:
+  re-enter password:
+```
+
+
 
 
 
