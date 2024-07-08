@@ -72,9 +72,24 @@ Doctor uses inline stack for managing patient visit records.
 ![Screenshot 2024-07-08 142223](https://github.com/HIITSMANU/pulseAI/assets/132491372/068c57e2-5f8e-4420-a79b-76268868bc24)
 
 
+
 ## Running Tests
 
 To run tests, run the following command
+
+How to CreateVirualEnvironment(Refer to the Below Link)
+```bash
+https://www.freecodecamp.org/news/how-to-setup-virtual-environments-in-python/
+```
+
+How to StartProject 
+```bash
+  django-admin startproject projectname
+```
+How to CreateApp
+```bash
+  python manage.py startapp appname
+```
 
 Build Command 
 ```bash
@@ -104,6 +119,7 @@ To make admin registration
   enter password:
   re-enter password:
 ```
+
 
 
 
