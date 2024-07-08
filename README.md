@@ -119,8 +119,7 @@ To make admin registration
 ```
 
 A Small demo of the project:
-https://github.com/HIITSMANU/pulseAI/assets/132491372/a6225c5b-654b-4f76-b7da-04177dab9495
-
+https://github.com/HIITSMANU/pulseAI/assets/132491372/0db55f44-63a6-4e51-a6a9-b42f85857e28
 
 
 
