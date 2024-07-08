@@ -12,8 +12,6 @@ Doctor uses inline stack for managing patient visit records.
 
 **USER**- Patient registers and logs in.Patient reads and comments on blogs.Patient fills out a heart disease test form.AI model predicts heart disease risk.Patient views test results and can schedule appointments.
 
-
-
 ## Features
 
 **Admin**
@@ -120,6 +118,8 @@ To make admin registration
   re-enter password:
 ```
 
+A Small demo of the project:
+https://github.com/HIITSMANU/pulseAI/assets/132491372/a6225c5b-654b-4f76-b7da-04177dab9495
 
 
 
