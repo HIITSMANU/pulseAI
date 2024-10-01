@@ -5,9 +5,11 @@
     <div class="row g-2">
         <div class="col-md-2">
             {% comment "" %}sidebar{% endcomment %}
+            <h3 class="p-3">Filters <i class="fa-solid fa-filter"></i></h3>
             <div class="sidebar-wrapper d-flex justify-content-between">
                 <div class="sidebar-menu p-3 d-none d-md-block" id="sidebar-menu">
                    <ul class="list-unstyled">
+                    <h5 class="text-muted" style="font-style:italic">Blog Name:</h5>
                     <li class="py-2 ">
                         <a class="text-decoration-none" href="{% url "blogs" %}">All</a>
                     </li>
@@ -45,6 +47,15 @@
                 </div>
             </div>
             {% endfor %}
+        </div>
+
+        <div class="col-md-2">
+            {% comment %} <video class="vid" autoplay loop muted>
+                <source src="{% static "images/video.mp4" %}" type="video/mp4">
+                
+                Your browser does not support the video tag.
+              </video> {% endcomment %}
+              <iframe width="100%" height="100%" src="https://www.youtube.com/embed/TjzwohzLJgA?si=UJM1FmorEyug7Sjt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; loop; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
     </div>
 {% comment %} </div> {% endcomment %}

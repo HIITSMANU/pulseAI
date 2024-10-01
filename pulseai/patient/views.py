@@ -7,6 +7,12 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from datetime import datetime
 
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
+from django.contrib import messages
+from patient.form import EmailChangeForm, CustomPasswordChangeForm
+
 from patient.form import HeartVitalForm
 from patient.predict import predict_heart_disease
 from patient.models import HeartVital,Appointment,Visit,Patient
@@ -155,3 +161,29 @@ def profile_view(request):
     }
 
     return render(request,'patient/profile.html',context)
+
+
+@login_required
+def change_email(request):
+    if request.method == 'POST':
+        form = EmailChangeForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your email has been updated successfully.')
+            return redirect('profile') 
+    else:
+        form = EmailChangeForm(instance=request.user)
+    return render(request, 'patient/change-email.html', {'form': form})
+
+@login_required
+def edit_password(request):
+    if request.method == 'POST':
+        form = CustomPasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  
+            messages.success(request, 'Your password has been updated successfully.')
+            return redirect('profile')
+    else:
+        form = CustomPasswordChangeForm(user=request.user)
+    return render(request, 'patient/edit_password.html', {'form': form})

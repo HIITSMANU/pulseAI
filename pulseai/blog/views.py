@@ -9,7 +9,7 @@ def index(request):
 def about(request):
     return render(request,'blog/about.html')
 
-def contact(request):
+# def contact(request):
 
     mobile = 7681049268
     email = "manoharss0407@gmail.com"
